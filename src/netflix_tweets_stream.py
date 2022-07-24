@@ -26,6 +26,14 @@ auth_params = {
     'grant_type': "client_credentials"
 }
 
+## get the response
+auth_response = re.post(auth_url, data=auth_data, auth=auth_auth)
+auth_response.json()
+
+## assign the response
+token_type = auth_response.json()['token_type']
+access_token = auth_response.json()['access_token']
+
 ## set up filename
 
 filename = "netflix_tweets_v1.json"
