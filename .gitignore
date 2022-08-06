@@ -127,3 +127,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+data/models/mean_arima_model.pkl
+data/models/arima_model.pkl
