@@ -61,3 +61,28 @@ def rolling_mean_prediction(series, window):
     plt.plot(predictions[0:100], color='red')
     plt.show()
     return predictions
+
+def concatRename(df1, name1, df2, name2):
+    """
+    Concatenates and appends a specific prefix to each column name.
+    df1 (dataframe)
+    name1 (string)
+    df2 (dataframe)
+    name2 (string)
+    """
+    df1.columns = [name1 + name for name in df1.columns]
+    df2.columns = [name2 + name for name in df2.columns]
+    df3 = pd.concat([df1,df2], axis=1)
+    return df3
+
+def testSplit(df):
+    """
+    Takes a dataframe and removes the last 20% of rows for testing, specific for time series.
+    Returns (train, test).
+    """
+    data = df.copy()
+    rows = data.shape[0]
+    n_drop = int(rows * 0.20)
+    test = data.tail(n_drop)
+    data.drop(data.tail(n_drop).index, inplace = True)
+    return data, test
