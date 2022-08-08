@@ -2,8 +2,13 @@ import os
 import requests as re
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 from sklearn.metrics import mean_squared_error
+
+target_column = 'nflx_Adj Close'
+
+## APIs
 
 def gNewsSearch(date_start, date_end, query='netflix company', lang='en'):
     """
@@ -32,10 +37,15 @@ def gNewsSearch(date_start, date_end, query='netflix company', lang='en'):
     response = (re.get(url, params=params))
     return response
 
+## Rolling mean prediction
+
 def rolling_mean_prediction(series, window):
     """
     Takes a time series and a window (int) to predict the value that follows the window.
     returns an array of predictions and prints plots
+
+    series (pandas Series)
+    window (int)
     """
     X = series.values
     window=window
@@ -62,6 +72,8 @@ def rolling_mean_prediction(series, window):
     plt.show()
     return predictions
 
+## Feature engineering
+
 def concatRename(df1, name1, df2, name2):
     """
     Concatenates and appends a specific prefix to each column name.
@@ -75,14 +87,82 @@ def concatRename(df1, name1, df2, name2):
     df3 = pd.concat([df1,df2], axis=1)
     return df3
 
-def testSplit(df):
+def testSplit(df, test_size=0.20):
     """
     Takes a dataframe and removes the last 20% of rows for testing, specific for time series.
     Returns (train, test).
+
+    df (dataframe)
+    test_size (float)
     """
     data = df.copy()
     rows = data.shape[0]
-    n_drop = int(rows * 0.20)
+    n_drop = int(rows * test_size)
     test = data.tail(n_drop)
     data.drop(data.tail(n_drop).index, inplace = True)
     return data, test
+
+def dropNa(df):
+    """
+    Drops rows with NA values, returns df
+    """
+    data = df.copy()
+    data = data.dropna(axis=1)
+    return data
+
+def dropTarget(df, column=target_column):
+    data = df.copy()
+    data = data.drop(column, axis=1)
+    return data
+
+# shift functions for entire df
+
+def shiftTime(df, rolling=1):
+    """
+    Takes a dataframe and column target name to return a df with a new lagged value column
+    """
+    data = df.copy()
+    data = data.shift(rolling)
+    return data
+
+def rollingMeanShift(df, column=target_column, rolling=3, period=1):
+    """
+    Takes a df, column name string, rolling window int and period int to create a new time series feature column.
+    """
+    data = df.copy()
+    data = data.rolling(rolling).mean().shift(period)
+    return data
+
+def trendDiff(df, column=target_column, delta=1):
+    """
+    Calculates a trend feature for a given timeframe.
+    """
+    data = df.copy()
+    data = data - data.shift(delta)
+    return data
+
+# shift functions for additionnal features
+
+def shiftTime_col(df, column=target_column, rolling=7):
+    """
+    Takes a dataframe and column target name to return a df with a new lagged value column
+    """
+    data = df.copy()
+    data[column+'_lag'+str(rolling)] = data[column].shift(rolling)
+    return data
+
+def rollingMeanShift_col(df, column=target_column, rolling=7, period=1):
+    """
+    Takes a df, column name string, rolling window int and period int to create a new time series feature column.
+    """
+    data = df.copy()
+    data[column+'_MA'+str(rolling)+'_lag'+str(period)] = data[column].rolling(rolling).mean().shift(period)
+    return data
+
+def trendDiff_col(df, column=target_column, delta=1):
+    """
+    Calculates a trend feature for a given timeframe.
+    """
+    data = df.copy()
+    data[column+'_delta'+str(delta)] = data[column] - data[column].shift(delta)
+    return data
