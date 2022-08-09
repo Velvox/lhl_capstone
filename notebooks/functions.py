@@ -114,6 +114,9 @@ def dropNa(df):
     return data
 
 def dropTarget(df, column=target_column):
+    """
+    Drops a specific column
+    """
     data = df.copy()
     data = data.drop(column, axis=1)
     return data
@@ -122,9 +125,11 @@ def dropTarget(df, column=target_column):
 
 class shiftTime(BaseEstimator,TransformerMixin):
 
-    def __init__(self, X, rolling=1):
+    def __init__(self, rolling=1):
         self.rolling = rolling
-        self.X = X
+
+    def fit(self, X, rolling=1):
+        return self
 
     def transform(self, X, rolling=1):
         """
@@ -132,20 +137,34 @@ class shiftTime(BaseEstimator,TransformerMixin):
         """
         data = X.copy()
         data = data.shift(rolling)
-        return data
+        return pd.DataFrame(data)
     
-    #     """
-    #     Takes a dataframe and column target name to return a df with a new lagged value column
-    #     """
-    # def shiftTime(df, rolling=1):
 
-    #     data = df.copy()
-    #     data = data.shift(rolling)
-    #     return data
+# def shiftTime(df:pd.DataFrame, rolling: int=1):
+#     """
+#     Takes a dataframe and column target name to return a df with a new lagged value column.
+    
+#     Parameters:
+#     df(dataframe)
+#     rolling(int): amount of timesteps to shift
 
-def rollingMeanShift(df, column=target_column, rolling=3, period=1):
+#     Returns:
+#     df(dataframe)
+#     """
+#     data = df.copy()
+#     data = data.shift(rolling)
+#     return data
+
+def rollingMeanShift(df, rolling=3, period=1):
     """
     Takes a df, column name string, rolling window int and period int to create a new time series feature column.
+
+    Parameters:
+    df(dataframe)
+    rolling(int): amount of timesteps to shift
+
+    Returns:
+    df(dataframe)
     """
     data = df.copy()
     data = data.rolling(rolling).mean().shift(period)
