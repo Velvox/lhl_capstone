@@ -1,8 +1,11 @@
 import os
+from re import L
 import requests as re
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+
+from sklearn.base import BaseEstimator, TransformerMixin
 
 from sklearn.metrics import mean_squared_error
 
@@ -117,13 +120,28 @@ def dropTarget(df, column=target_column):
 
 # shift functions for entire df
 
-def shiftTime(df, rolling=1):
-    """
-    Takes a dataframe and column target name to return a df with a new lagged value column
-    """
-    data = df.copy()
-    data = data.shift(rolling)
-    return data
+class shiftTime(BaseEstimator,TransformerMixin):
+
+    def __init__(self, X, rolling=1, y=None):
+        self.rolling = rolling
+        return self
+    
+    def transform(self, X, rolling=1, y=None):
+        """
+        Takes a dataframe and column target name to return a df with a new lagged value column
+        """
+        data = X.copy()
+        data = data.shift(rolling)
+        return data
+    
+    #     """
+    #     Takes a dataframe and column target name to return a df with a new lagged value column
+    #     """
+    # def shiftTime(df, rolling=1):
+
+    #     data = df.copy()
+    #     data = data.shift(rolling)
+    #     return data
 
 def rollingMeanShift(df, column=target_column, rolling=3, period=1):
     """
