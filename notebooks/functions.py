@@ -122,11 +122,11 @@ def dropTarget(df, column=target_column):
 
 class shiftTime(BaseEstimator,TransformerMixin):
 
-    def __init__(self, X, rolling=1, y=None):
+    def __init__(self, X, rolling=1):
         self.rolling = rolling
-        return self
-    
-    def transform(self, X, rolling=1, y=None):
+        self.X = X
+
+    def transform(self, X, rolling=1):
         """
         Takes a dataframe and column target name to return a df with a new lagged value column
         """
