@@ -13,7 +13,7 @@ target_column = 'nflx_Adj Close'
 
 ## APIs
 
-def gNewsSearch(date_start, date_end, query='netflix company', lang='en'):
+def gNewsSearch(date_start: str, date_end: str, query: str='netflix company', lang:str ='en'):
     """
     Takes a query and timeframe to return a set of articles,
     requires api key stores as GNEWS_API_KEY in OS var.
@@ -42,7 +42,7 @@ def gNewsSearch(date_start, date_end, query='netflix company', lang='en'):
 
 ## Rolling mean prediction
 
-def rolling_mean_prediction(series, window):
+def rolling_mean_prediction(series: pd.Series, window: int):
     """
     Takes a time series and a window (int) to predict the value that follows the window.
     returns an array of predictions and prints plots
@@ -77,7 +77,7 @@ def rolling_mean_prediction(series, window):
 
 ## Feature engineering
 
-def concatRename(df1, name1, df2, name2):
+def concatRename(df1: pd.DataFrame, name1: str, df2: pd.DataFrame, name2: str):
     """
     Concatenates and appends a specific prefix to each column name.
     df1 (dataframe)
@@ -90,7 +90,7 @@ def concatRename(df1, name1, df2, name2):
     df3 = pd.concat([df1,df2], axis=1)
     return df3
 
-def testSplit(df, test_size=0.20):
+def testSplit(df: pd.DataFrame, test_size: float=0.20):
     """
     Takes a dataframe and removes the last 20% of rows for testing, specific for time series.
     Returns (train, test).
@@ -105,15 +105,16 @@ def testSplit(df, test_size=0.20):
     data.drop(data.tail(n_drop).index, inplace = True)
     return data, test
 
-def dropNa(df):
+def dropNa(df: pd.DataFrame):
     """
     Drops rows with NA values, returns df
+
     """
     data = df.copy()
     data = data.dropna(axis=1)
     return data
 
-def dropTarget(df, column=target_column):
+def dropTarget(df: pd.DataFrame, column: str=target_column):
     """
     Drops a specific column
     """
@@ -125,7 +126,7 @@ def dropTarget(df, column=target_column):
 
 class shiftTime(BaseEstimator,TransformerMixin):
 
-    def __init__(self, rolling=1):
+    def __init__(self, rolling: int=1):
         self.rolling = rolling
 
     def fit(self, X, rolling=1):
@@ -203,3 +204,36 @@ def trendDiff_col(df, column=target_column, delta=1):
     data = df.copy()
     data[column+'_delta'+str(delta)] = data[column] - data[column].shift(delta)
     return data
+
+# Text processing
+
+def newsapiArticleUnpack(df: pd.DataFrame):
+    """
+    Takes a raw News API dataframe and returns it restructured for use.
+
+    df (dataframe)
+
+    Returns:
+    df (dataframe)
+    """
+
+    # instantiate variables
+    index = 0
+    articles_dict = {}
+
+    # load articles only
+    articles_df=pd.DataFrame(df.loc['articles'])
+    
+    # find and store in dict
+    for date in articles_df.index:
+        for item in articles_df.loc[date]:
+            for article in item:
+                articles_dict[index] = {}
+                for key in article.keys():
+                    articles_dict[index][key] = article[key]
+                index += 1
+    
+    # turn dict into DF
+    result = pd.DataFrame(articles_dict).T
+    
+    return result
