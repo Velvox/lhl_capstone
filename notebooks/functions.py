@@ -6,8 +6,13 @@ import numpy as np
 import pandas as pd
 
 from sklearn.base import BaseEstimator, TransformerMixin
-
 from sklearn.metrics import mean_squared_error
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+import string
+
+# text packages
+from nltk.tokenize import word_tokenize
 
 target_column = 'nflx_Adj Close'
 
@@ -237,3 +242,41 @@ def newsapiArticleUnpack(df: pd.DataFrame):
     result = pd.DataFrame(articles_dict).T
     
     return result
+
+def text_preprocessing(df):
+    """
+    Takes in a df of text features and processes them
+    """
+    data = df
+    columns = data.columns
+    preprocessed_data = {}
+    for column in columns:
+        temp_list = []
+        for text in data[column]:
+
+            # split into words
+            tokens = word_tokenize(text)
+            
+            # lowercase
+            tokens = [w.lower() for w in tokens]
+            
+            # remove punctuation
+            table = str.maketrans('', '', string.punctuation)
+            stripped = [w.translate(table) for w in tokens]
+            # remove remaining tokens that are not alphabetic
+            words = [word for word in stripped if word.isalpha()]
+
+            # remove stopwords
+            stop_words = stopwords.words('english')
+            stop_words = set(stopwords.words('english'))
+            words = [w for w in words if not w in stop_words]
+
+            # lemmatize data
+            lemmatizer = WordNetLemmatizer()
+            lemmatized = [lemmatizer.lemmatize(word) for word in words]
+            lemmatized = ' '.join(lemmatized)
+            temp_list.append(lemmatized)
+        preprocessed_data[column + '_processed'] = temp_list
+
+    preprocessed_df = pd.DataFrame(preprocessed_data)
+    return preprocessed_df
