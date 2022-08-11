@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 data/models/mean_arima_model.pkl
 data/models/arima_model.pkl
+data/models/arima/mean_arima_model.pkl
+data/models/arima/arima_model.pkl
+data/models/finBERT/pytorch_model.bin
