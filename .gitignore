@@ -133,3 +133,5 @@ data/models/arima/mean_arima_model.pkl
 data/models/arima/arima_model.pkl
 data/models/finBERT/pytorch_model.bin
 models/classifier_model/finbert-sentiment/pytorch_model.bin
+models/arima/arima_model.pkl
+models/arima/mean_arima_model.pkl
