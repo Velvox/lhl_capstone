@@ -611,7 +611,8 @@ def predict(text, model, write_to_csv=False, path=None, use_gpu=False, gpu_name=
         examples = [InputExample(str(i), sentence) for i, sentence in enumerate(batch)]
 
         features = convert_examples_to_features(examples, label_list, 64, tokenizer)
-
+        print("!!!!!!!!!!!!!!!!!!!!!!")
+        print(features[0])
         all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long).to(device)
         all_attention_mask = torch.tensor([f.attention_mask for f in features], dtype=torch.long).to(device)
         all_token_type_ids = torch.tensor([f.token_type_ids for f in features], dtype=torch.long).to(device)
@@ -629,7 +630,6 @@ def predict(text, model, write_to_csv=False, path=None, use_gpu=False, gpu_name=
                             'logit': list(logits),
                             'prediction': predictions,
                             'sentiment_score': sentiment_score}
-
             batch_result = pd.DataFrame(batch_result)
             result = pd.concat([result, batch_result], ignore_index=True)
 
