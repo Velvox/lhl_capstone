@@ -110,14 +110,10 @@ def testSplit(df: pd.DataFrame, test_size: float=0.20):
     data.drop(data.tail(n_drop).index, inplace = True)
     return data, test
 
-def dropNa(df: pd.DataFrame):
-    """
-    Drops rows with NA values, returns df
-
-    """
-    data = df.copy()
-    data = data.dropna(axis=1)
-    return data
+def drop_nans(X, y=None):                                        
+    df = pd.DataFrame(X)
+    df.dropna(inplace=True)
+    return df.values
 
 def dropTarget(df: pd.DataFrame, column: str=target_column):
     """
@@ -280,3 +276,4 @@ def text_preprocessing(df):
 
     preprocessed_df = pd.DataFrame(preprocessed_data)
     return preprocessed_df
+
