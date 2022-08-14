@@ -1,4 +1,4 @@
-publishedAt,description_sentiment_neutral,description_sentiment_positive,description_sentiment_negative,daily_sentiment
+publishedAt,description_sentiment_neutral,description_sentiment_positive,description_sentiment_negative,news_daily_sentiment
 2022-07-10,0.31141272,-2.1045406,1.9020077,negative
 2022-07-11,-1.874073,1.9329189,-0.67666966,positive
 2022-07-12,-1.4677594,0.49157917,0.7326106,negative
@@ -19,3 +19,7 @@ publishedAt,description_sentiment_neutral,description_sentiment_positive,descrip
 2022-08-01,-0.08830578,-2.4553761,2.184253,negative
 2022-08-02,0.5011075,-1.6890068,0.81510884,negative
 2022-08-04,-0.82659024,-1.5519605,2.4099424,negative
+2022-08-09,-0.10838823,-2.624429,2.7574248,negative
+2022-08-10,2.565963,-2.0130448,-0.023204997,neutral
+2022-08-11,1.1391239,-2.728551,1.466206,negative
+2022-08-12,0.09455197,-2.6903443,2.6985831,negative

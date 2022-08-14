@@ -110,11 +110,6 @@ def testSplit(df: pd.DataFrame, test_size: float=0.20):
     data.drop(data.tail(n_drop).index, inplace = True)
     return data, test
 
-def drop_nans(X, y=None):                                        
-    df = pd.DataFrame(X)
-    df.dropna(inplace=True)
-    return df.values
-
 def dropTarget(df: pd.DataFrame, column: str=target_column):
     """
     Drops a specific column
@@ -125,37 +120,37 @@ def dropTarget(df: pd.DataFrame, column: str=target_column):
 
 # shift functions for entire df
 
-class shiftTime(BaseEstimator,TransformerMixin):
+# class shiftTime(BaseEstimator,TransformerMixin):
 
-    def __init__(self, rolling: int=1):
-        self.rolling = rolling
+#     def __init__(self, rolling: int=1):
+#         self.rolling = rolling
 
-    def fit(self, X, rolling=1):
-        return self
+#     def fit(self, X, rolling=1):
+#         return self
 
-    def transform(self, X, rolling=1):
-        """
-        Takes a dataframe and column target name to return a df with a new lagged value column
-        """
-        data = X.copy()
-        data = data.shift(rolling)
-        return pd.DataFrame(data)
+#     def transform(self, X, rolling=1):
+#         """
+#         Takes a dataframe and column target name to return a df with a new lagged value column
+#         """
+#         data = X.copy()
+#         data = data.shift(rolling)
+#         return pd.DataFrame(data)
     
 
-# def shiftTime(df:pd.DataFrame, rolling: int=1):
-#     """
-#     Takes a dataframe and column target name to return a df with a new lagged value column.
+def shiftTime(df:pd.DataFrame, rolling: int=1):
+    """
+    Takes a dataframe and column target name to return a df with a new lagged value column.
     
-#     Parameters:
-#     df(dataframe)
-#     rolling(int): amount of timesteps to shift
+    Parameters:
+    df(dataframe)
+    rolling(int): amount of timesteps to shift
 
-#     Returns:
-#     df(dataframe)
-#     """
-#     data = df.copy()
-#     data = data.shift(rolling)
-#     return data
+    Returns:
+    df(dataframe)
+    """
+    data = df.copy()
+    data = data.shift(rolling)
+    return data
 
 def rollingMeanShift(df, rolling=3, period=1):
     """
