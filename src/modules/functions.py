@@ -288,3 +288,12 @@ def regression_results(y_true, y_pred):
     print('MAE: ', round(mean_absolute_error,4))
     print('MSE: ', round(mse,4))
     print('RMSE: ', round(np.sqrt(mse),4))
+
+def rmse(actual, predict):
+    predict = np.array(predict)
+    actual = np.array(actual)
+    distance = predict - actual
+    square_distance = distance ** 2
+    mean_square_distance = square_distance.mean()
+    score = np.sqrt(mean_square_distance)
+    return score
