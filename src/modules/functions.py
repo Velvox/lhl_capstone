@@ -236,7 +236,7 @@ def newsapiArticleUnpack(df: pd.DataFrame):
     
     return result
 
-def text_preprocessing(df):
+def text_preprocessing(df, add_stop):
     """
     Takes in a df of text features and processes them
     """
@@ -260,8 +260,10 @@ def text_preprocessing(df):
             words = [word for word in stripped if word.isalpha()]
 
             # remove stopwords
-            stop_words = stopwords.words('english')
             stop_words = set(stopwords.words('english'))
+            for word in add_stop:
+                print(word)
+                stop_words.add(word)
             words = [w for w in words if not w in stop_words]
 
             # lemmatize data
