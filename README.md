@@ -39,4 +39,4 @@ Given information we have today, learn what features improve stock price predict
 - Collect 3 months to a year of Twitter and news data to build a more effective model across multiple companies.
 - Filter news & twitter content with keywords identified in LDA topic analysis. Focus on news data moving forward.
 - Deploy the model and use online learning to make daily optimizations and predictions.
-- With more data, start multi-step time series predictions with sentiment.
+- With more data, start multi-step time series predictions with sentiment. Also explore LSTMs
