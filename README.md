@@ -1,5 +1,5 @@
 # Netflix Stock Prediction Enhanced with Sentiment.
-This project aims to enhance prediction of the Netflix stock price with news and twitter sentiment. Using these new features we will aim to improve a baseline model's performance and prove out the use of sentiment to predict stock price.
+This project aims to enhance prediction of Netflix stock price with news and twitter sentiment. Using these new features we will aim to improve a baseline model's performance and prove out the use of sentiment to predict stock price.
 
 Project slide deck:
 https://docs.google.com/presentation/d/1IpHQJVaRVdgiPJQiatTl1VZGb1A3GhGJKNvoHarub-w/edit?usp=sharing
