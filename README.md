@@ -1,5 +1,5 @@
 # Netflix Stock Prediction Enhanced with Sentiment.
-This project aims to enhance time series predictions of the Netflix stock price with news and twitter sentiment. Using these new features we will aim to improve a baseline model's performance and prove out the use of sentiment to predict stock price.
+This project aims to enhance prediction of Netflix stock price with news and twitter sentiment. Using these new features we will aim to improve a baseline model's performance and prove out the use of sentiment to predict stock price.
 
 Project slide deck:
 https://docs.google.com/presentation/d/1IpHQJVaRVdgiPJQiatTl1VZGb1A3GhGJKNvoHarub-w/edit?usp=sharing
@@ -39,4 +39,4 @@ Given information we have today, learn what features improve stock price predict
 - Collect 3 months to a year of Twitter and news data to build a more effective model across multiple companies.
 - Filter news & twitter content with keywords identified in LDA topic analysis. Focus on news data moving forward.
 - Deploy the model and use online learning to make daily optimizations and predictions.
-- With more data, start multi-step time series predictions with sentiment.
+- With more data, start multi-step time series predictions with sentiment. Also explore LSTMs
