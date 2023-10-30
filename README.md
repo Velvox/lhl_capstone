@@ -11,7 +11,7 @@ https://docs.google.com/presentation/d/1IpHQJVaRVdgiPJQiatTl1VZGb1A3GhGJKNvoHaru
 Given information we have today, learn what features improve stock price prediction of tomorrow, considering online sentiment.
 
 ## Key Learnings
-#### Adding sentiment to the model improved prediction acuraccy measurably, when used in a 14-day proof-of concept.
+#### Adding sentiment to the model improved prediction accuracy measurably, when used in a 14-day proof-of concept.
 
 ![Sentiment Feature Improvements](/imgs/prediction_results.png)
 
